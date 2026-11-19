@@ -1,0 +1,11 @@
+# Normalize text files in the repository; checkout uses the platform's line endings.
+* text=auto
+
+# Windows scripts must keep CRLF.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binaries shipped with the solution.
+*.dll binary
+*.lib binary
+*.docx binary

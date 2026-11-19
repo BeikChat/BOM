@@ -1,0 +1,6 @@
+; Explicit export table: guarantees undecorated names for __stdcall functions on x86
+; (otherwise MSVC would export _AnalyzeProfile@16), which Delphi's GetProcAddress expects.
+LIBRARY profile_analyzer
+EXPORTS
+    AnalyzeProfile
+    GetAnalyzeProfileErrorText

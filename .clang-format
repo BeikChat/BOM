@@ -1,0 +1,14 @@
+BasedOnStyle: Google
+IndentWidth: 4
+Language: Cpp
+ColumnLimit: 90
+AccessModifierOffset: -4
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+IndentPPDirectives: BeforeHash
+NamespaceIndentation: All
+BreakBeforeBraces: Attach
+BreakBeforeTernaryOperators: true
+PointerAlignment: Left
+SortIncludes: true

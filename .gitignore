@@ -1,0 +1,23 @@
+# Build trees
+/build/
+/stage/
+/out/
+CMakeUserPresets.json
+*.user
+
+# IDE
+.vs/
+.vscode/
+.idea/
+
+# Free Pascal / Delphi build artifacts
+*.o
+*.ppu
+*.dcu
+*.exe
+*.identcache
+*.local
+__history/
+
+# Keep the shipped prebuilt DLLs
+!prebuilt/**

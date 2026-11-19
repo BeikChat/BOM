@@ -1,0 +1,66 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": { "major": 3, "minor": 22, "patch": 0 },
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "generator": "Ninja Multi-Config",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "installDir": "${sourceDir}/stage/${presetName}",
+      "cacheVariables": {
+        "CMAKE_CONFIGURATION_TYPES": "Debug;Release"
+      }
+    },
+    {
+      "name": "arch-x64",
+      "hidden": true,
+      "inherits": "base",
+      "architecture": { "value": "x64", "strategy": "external" }
+    },
+    {
+      "name": "x64",
+      "displayName": "x64 (Qt from an installation, QTDIR)",
+      "description": "Application + DLL + Delphi demo + tests. Qt 6 is taken from the QTDIR environment variable, e.g. C:/Qt/6.9.2/msvc2022_64 (or pass -DCMAKE_PREFIX_PATH=...).",
+      "inherits": "arch-x64",
+      "cacheVariables": {
+        "CMAKE_PREFIX_PATH": "$env{QTDIR}"
+      }
+    },
+    {
+      "name": "x64-vcpkg",
+      "displayName": "x64 (Qt from vcpkg)",
+      "description": "Same as x64, but Qt is built by vcpkg from vcpkg.json. Requires VCPKG_ROOT; the first configure takes long.",
+      "inherits": "arch-x64",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+        "VCPKG_TARGET_TRIPLET": "x64-windows"
+      }
+    },
+    {
+      "name": "x86-dll",
+      "displayName": "x86: profile_analyzer.dll + Delphi demo (no Qt)",
+      "description": "32-bit DLL for legacy Delphi applications. Tests: the Delphi demo against the DLL.",
+      "inherits": "base",
+      "architecture": { "value": "x86", "strategy": "external" },
+      "cacheVariables": {
+        "BOM_BUILD_APP": "OFF"
+      }
+    }
+  ],
+  "buildPresets": [
+    { "name": "x64-debug", "configurePreset": "x64", "configuration": "Debug" },
+    { "name": "x64-release", "configurePreset": "x64", "configuration": "Release" },
+    { "name": "x64-stage", "configurePreset": "x64", "configuration": "Release", "targets": [ "install" ] },
+    { "name": "x64-vcpkg-debug", "configurePreset": "x64-vcpkg", "configuration": "Debug" },
+    { "name": "x64-vcpkg-release", "configurePreset": "x64-vcpkg", "configuration": "Release" },
+    { "name": "x64-vcpkg-stage", "configurePreset": "x64-vcpkg", "configuration": "Release", "targets": [ "install" ] },
+    { "name": "x86-dll-release", "configurePreset": "x86-dll", "configuration": "Release" },
+    { "name": "x86-dll-stage", "configurePreset": "x86-dll", "configuration": "Release", "targets": [ "install" ] }
+  ],
+  "testPresets": [
+    { "name": "x64-release", "configurePreset": "x64", "configuration": "Release", "output": { "outputOnFailure": true } },
+    { "name": "x64-vcpkg-release", "configurePreset": "x64-vcpkg", "configuration": "Release", "output": { "outputOnFailure": true } },
+    { "name": "x86-dll-release", "configurePreset": "x86-dll", "configuration": "Release", "output": { "outputOnFailure": true } }
+  ]
+}
